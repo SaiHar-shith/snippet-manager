@@ -17,9 +17,6 @@ A Full Stack application to save, organize, and retrieve code snippets. Built wi
 - **Database:** PostgreSQL (Supabase)
 - **Deployment:** Vercel (Frontend) + Render (Backend)
 
-## 📸 Screenshots
-*(Take a screenshot of your app and paste it here!)*
-
 ## 📦 Setup & Installation
 1. Clone the repo
 2. `npm install` in both client and server folders.
