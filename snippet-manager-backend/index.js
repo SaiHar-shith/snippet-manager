@@ -1,11 +1,5 @@
 const dns = require('dns');
-dns.setDefaultResultOrder('ipv4first'); 
-
-const express = require('express');
-const dns = require('dns');
-dns.setDefaultResultOrder('ipv4first'); 
-
-const express = require('express');
+dns.setDefaultResultOrder('ipv4first');
 
 const express = require('express');
 const cors = require('cors');
@@ -20,22 +14,22 @@ app.use(express.json());
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
-
 app.get('/snippets', async (req, res) => {
-    const { user_id } = req.query; 
+    const { user_id } = req.query;
 
     try {
         let query;
         let params;
 
         if (user_id) {
-           
             query = 'SELECT * FROM snippets WHERE user_id = $1 ORDER BY created_at DESC';
             params = [user_id];
         } else {
-            
             return res.json([]);
         }
 
@@ -61,8 +55,9 @@ app.post('/snippets', async (req, res) => {
         `;
         const snippetValues = [user_id, title, code_content, language, description];
         const snippetResult = await client.query(snippetText, snippetValues);
-        const newSnippetId = snippetResult.rows[0].id;
-        let newSnippet = snippetResult.rows[0];
+        
+        const newSnippet = snippetResult.rows[0];
+        const newSnippetId = newSnippet.id;
         newSnippet.tags = [];
 
         if (tags && tags.length > 0) {
